@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Party Room</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+
+    <!-- Lobby: shown until we are connected to a room. -->
+    <div id="lobby" class="overlay">
+      <div class="panel">
+        <h1>Party Room</h1>
+        <p class="sub">Pick a name, then start a room or join one.</p>
+
+        <label class="field">
+          <span>Your name</span>
+          <input id="name" type="text" maxlength="16" placeholder="Player" autocomplete="off" />
+        </label>
+
+        <button id="create" class="primary">Create a room</button>
+
+        <div class="divider"><span>or join one</span></div>
+
+        <ul id="rooms" class="rooms"></ul>
+        <p id="no-rooms" class="no-rooms">No open rooms right now.</p>
+
+        <form id="join-form" class="join">
+          <input id="code" type="text" maxlength="4" placeholder="CODE" autocomplete="off" spellcheck="false" />
+          <button type="submit">Join</button>
+        </form>
+
+        <p id="error" class="error" hidden></p>
+      </div>
+    </div>
+
+    <!-- In-room HUD. -->
+    <div id="hud" hidden>
+      <div class="hud-card">
+        <span class="hud-label">Room code</span>
+        <strong id="hud-code" class="hud-code"></strong>
+        <ul id="players" class="players"></ul>
+        <button id="leave" class="leave">Leave room</button>
+      </div>
+    </div>
+
+    <!-- Aiming reticle, shown while the mouse is captured. -->
+    <div id="crosshair" class="crosshair" hidden></div>
+
+    <!-- Who is under the crosshair, and the action menu once opened. -->
+    <div id="actions" class="actions" hidden>
+      <span id="action-target" class="actions-target"></span>
+      <ul id="action-list" class="action-list" hidden></ul>
+      <span id="actions-hint" class="actions-hint"></span>
+    </div>
+
+    <!-- The last thing said in the room, shown to everyone wherever they look. -->
+    <p id="said" class="said" hidden></p>
+
+    <!-- Game announcements: who starts a round, who just lost. -->
+    <p id="announce" class="announce" hidden></p>
+
+    <div id="hint" class="hint" hidden>Click to look around &middot; Esc to release</div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
