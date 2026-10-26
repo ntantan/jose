@@ -178,6 +178,13 @@ export class Room extends DurableObject<Env> {
   }
 
   override async webSocketClose(ws: WebSocket): Promise<void> {
+    // With hibernation the runtime doesn't answer the client's close frame,
+    // and the browser only fires "close" once it is answered.
+    try {
+      ws.close(1000, "left");
+    } catch {
+      // Already closed.
+    }
     await this.announceLeave(ws);
   }
 

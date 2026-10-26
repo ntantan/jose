@@ -75,9 +75,15 @@ export class RoomConnection {
     this.send({ t: "say", to, ...say });
   }
 
+  /** Leaving is immediate: the room is torn down without waiting for the
+   * server to answer the close handshake. */
   close(): void {
+    if (this.leaving) return;
     this.leaving = true;
+    this.socket.removeEventListener("message", this.handleMessage);
+    this.socket.removeEventListener("close", this.handleClose);
     this.socket.close(1000, "left");
+    this.onClosed?.(closeReason(1000), true);
   }
 
   private send(message: ClientMessage): void {
